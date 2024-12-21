@@ -1565,9 +1565,17 @@ class AsyncClient(Client):
             raise LocalProtocolError("No key upload needed.")
 
         assert self.olm
+        print("keys_upload() called")
+        print(f"  self.olm: {self.olm}")  # Check if self.olm is valid
+
         keys_dict = self.olm.share_keys()
+        print(f"  keys_dict: {keys_dict}")  # Inspect the key data
 
         method, path, data = Api.keys_upload(self.access_token, keys_dict)
+
+        print(f"  Request method: {method}")
+        print(f"  Request path: {path}")
+        print(f"  Request data: {data}")  # Inspect the request body
 
         return await self._send(KeysUploadResponse, method, path, data)
 
